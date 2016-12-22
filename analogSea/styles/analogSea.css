@@ -1,3 +1,4 @@
+
 body{
 	background-color: #298eea;
 	font-family: 'Roboto', helvetica, sans-serif;
@@ -23,7 +24,7 @@ main{
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-    border-radius:2px;
+    border-radius:3px;
 }
 
 
