@@ -1,62 +1,43 @@
-function getAverageWordsPerSentence(text) {
 
-  var numSentences = text.match(/[.!?]+/g) ? text.match(/[.!?]+/g).length : 1;
-  var wordCount = tokenizeText(text).length;
-  return (wordCount / numSentences).toFixed(1);
-}
-
-function getAverageWordLength(tokens) {
-
-  var totalLength = tokens.join("").length;
-  return (totalLength / tokens.length);toFixed(1);
-}
-
-function countDistinctWords(tokens) {
-
-  var distinctWords = new Set(tokens);
-  return distinctWords.size;
-}
-
-function tokenizeText(text) {
-  return text.toLowerCase().match(/\b[^\s]+\b/g);
+function wordCounter(text){
+  var spaceCount=text.match(/[\s]/gm);
+  var paragraphCount=text.match(/(\.|\?|!|")$/gm);
+  var wordCount=spaceCount.length+paragraphCount.length;
+  return wordCount;
 }
 
 
-function removeReturns(text) {
-  return text.replace(/\r?\n|\r/g, "");
+function tokenizer(text){
+  return text.toLowerCase().match(/[a-zA-Z0-9]/gm);
+  
 }
 
 
-  function reportOnText(text) {
-
-  var tokens = tokenizeText(text);
-  var numUniqueWords = countDistinctWords(tokens);
-  var numTotalWords = tokens.length;
-  var averageWordLength = getAverageWordLength(tokens);
-  var averageWordsPerSentence = getAverageWordsPerSentence(text);
-
-
-  var textReport = $('.js-text-report');
-  textReport.find('.js-word-count').text(numTotalWords);
-  textReport.find('.js-unique-word-count').text(numUniqueWords);
-  textReport.find('.js-average-word-length').text(
-    averageWordLength + " characters");
-  textReport.find('.js-average-sentence-length').text(
-    averageWordsPerSentence + " words");
+function reportOnText(text){
+  var tokens=tokenizer(text);
+  var wordCount=wordCounter(text);
+  
+  
+  var textReport=$('.js-text-report');
   textReport.removeClass('hidden');
+  textReport.find('.js-wordCount').text(wordCount);
+  
+  
 }
 
 
-function analyzeText() {
-  $('.js-text-form').submit(function(event) {
-    event.preventDefault();
-    
-    var userText = $(this).find('#user-text').val();
-    reportOnText(removeReturns(userText));
-  });
-}
+
+function analyzeIt(){
+   $('.js-userText').submit(function(event){
+      event.preventDefault();
+      var userText =$(this).find('#user-text').val();
+      reportOnText(userText);
+      });
+   }
+                   
 
 
-$(function() {
-  analyzeText();
+$(function(){
+  analyzeIt();
 });
+
