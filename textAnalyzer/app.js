@@ -19,17 +19,25 @@ function avSentenceLengthCal(text, wordCount){
   return avSentenceLength;
 }
 
+function uniqueWordCounter(text){
+  var uniqueWords=text.toLowerCase().match(/[\w]/gm);
+  var uniqueWordSet=new Set(text);
+  return uniqueWordSet.size;
+}
+
 function reportOnText(text){
   var wordCount=wordCounter(text);
   var totalLetterCount=totalLetterCounter(text);
   var averageWordLength=(totalLetterCount / wordCount).toFixed(2);
   var avSentenceLength=avSentenceLengthCal(text, wordCount);
+  var uniqueWordCount=uniqueWordCounter(text);
   
   var textReport=$('.js-text-report');
   textReport.removeClass('hidden');
   textReport.find('.js-wordCount').text(wordCount);
   textReport.find('.js-averageWordLength').text(averageWordLength + " letters");
   textReport.find('.js-averageSentenceLength').text(avSentenceLength + " words");
+  textReport.find('.js-uniqueWordCount').text(uniqueWordCount);
 }
 
 
