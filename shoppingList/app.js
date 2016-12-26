@@ -7,7 +7,6 @@ items = ["apple", "orange", "coffee"];
 
 
 function returnItemHtml(item){
-  
   return ('<li>' +
   '<span class="shopping-item">' + item +
   '</span>' + 
@@ -22,32 +21,38 @@ function returnItemHtml(item){
   '</li>');
 }
 
-
+function resetListHtml(){
+  return ('<ul class="shopping-list js-shopping-list"></ul>');
+}
 
 function pushItem(state, items, newInput){
   var itemID=newInput;
   items.push(newInput);
-  console.log("tothispoint:" + items);
   //state.items.push(newInput);
   //console.log("state:" + state);
   return state.items;
 }
 
-
+function resetList(){
+  //console.log('reset list');
+  $('.js-items-div').html("<ul class='shopping-list js-shopping-list'></ul>");
+}
 
 function renderItemList(items, newInput){
   console.log("item list is: ");
-  
+  //reset list
+  resetList();
+  //
   for (var itemID in items){
     console.log(items[itemID]);
-    //$('.js-shopping-list').html(
-    //  returnItemHtml(items[itemID])
-    //  );
     $('.js-shopping-list').append(returnItemHtml(items[itemID]));
   }  
 }
 
-
+$('.js-shopping-item-delete').click(function(event){
+    //remove this li
+    
+});
 
 $(function userInput(){
   $('.js-form').submit(function(event){
