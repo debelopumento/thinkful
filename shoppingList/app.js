@@ -6,7 +6,7 @@ var state = {
 items = ["apple", "orange", "coffee"];
 
 
-function itemHtml(item){
+function returnItemHtml(item){
   
   return ('<li>' +
   '<span class="shopping-item">' + item +
@@ -40,9 +40,10 @@ function renderItemList(items, newInput){
   
   for (var itemID in items){
     console.log(items[itemID]);
-    $('.js-shopping-list').html(
-      itemHtml(items[itemID])
-      );
+    //$('.js-shopping-list').html(
+    //  returnItemHtml(items[itemID])
+    //  );
+    $('.js-shopping-list').append(returnItemHtml(items[itemID]));
   }  
 }
 
