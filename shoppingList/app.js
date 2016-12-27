@@ -1,9 +1,7 @@
-
 var state = {
-  items: []
+  items: ["apples", "oranges", "milk", "bread"]
 };
 
-items = ["apples", "oranges", "milk", "bread"];
 
 
 function returnItemHtml(item){
@@ -26,45 +24,50 @@ function resetListHtml(){
   return ('<ul class="shopping-list js-shopping-list"></ul>');
 }
 
-function pushItem(state, items, newInput){
+function pushItem(localState, newInput){
   var itemID=newInput;
-  items.push(newInput);
-  //state.items.push(newInput);
+  //items.push(newInput);
+  localState.items.push(newInput);
   //console.log("state:" + state);
-  return state.items;
+  return localState.items, localState;
 }
 
 function resetList(){
-  //console.log('reset list');
   $('.js-items-div').html("<ul class='shopping-list js-shopping-list'></ul>");
 }
 
-function renderItemList(items){
+function renderItemList(localState){
   console.log("item list is: ");
   //reset list
   resetList();
   //
-  for (var itemID in items){
-    console.log(items[itemID]);
-    $('.js-shopping-list').append(returnItemHtml(items[itemID]));
-  }  
+  var localItems=localState.items;
+  for (var itemID in localItems){
+    console.log(localItems[itemID]);
+    $('.js-shopping-list').append(returnItemHtml(localItems[itemID]));
+  }
+  deleteOnClick(localState);
+  checkOnClick(localState);
 }
 
 
-function deleteOnClick(){
+function deleteOnClick(localState){
   $('.js-delete-button').click(function(event){
-    var itemID=$(this.closest('li')).find('.js-shopping-item').val();
-    console.log("deleted item is ", itemID);
     this.closest('li').remove();
-    delete items[itemID];
+    var itemName = $(this).closest('li').find('.shopping-item').text();
+    for (var i=0; i <= localState.items.length; i++){
+      if (localState.items[i] = itemName){
+        localState.items.splice(i, 1);
+      }
+    renderItemList(localState);
+    }
   });
 }
 
-function checkOnClick(){
+function checkOnClick(localState){
   $('.js-check').click(function(event){
     console.log("check this item");
-    this.closest('span').removeClass('shopping-item__checked');
-    $(event.currentTarget).addClass('shopping-item__checked');
+    $(this).closest('li').toggleClass('shopping-item__checked');
   });
 }
 
@@ -74,9 +77,9 @@ $(function userInput(){
     event.preventDefault();
     var newInput = $(this).find('#user-newItemInput').val();
     console.log("input new item is: " + newInput);
-    pushItem(state, items, newInput);
-    renderItemList(items);
+    pushItem(state, newInput);
+    renderItemList(state);
     });
-  deleteOnClick();
-  checkOnClick();
+  //deleteOnClick(state);
+  checkOnClick(state);
 })
