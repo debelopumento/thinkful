@@ -1,58 +1,82 @@
 
-function wordCounter(text){
-  var spaceCount=text.match(/[\s]/gm);
-  var paragraphCount=text.match(/(\.|\?|!|")$/gm);
-  var wordCount=spaceCount.length+paragraphCount.length;
-  return wordCount;
+var state = {
+  items: []
+};
+
+items = ["apples", "oranges", "milk", "bread"];
+
+
+function returnItemHtml(item){
+  return ('<li>' +
+  '<span class="shopping-item js-shopping-item">' + 
+  item +
+  '</span>' + 
+    '<div class="shopping-item-controls">' +
+      '<button class="js-shopping-item-toggle js-check">' +
+        '<span class="button-label">check</span>' +
+      '</button>' +
+      '<button class="js-shopping-item-delete js-delete-button">' +
+        '<span class="button-label">delete</span>' +
+      '</button>' +
+    '</div>' +
+  '</li>');
+}
+
+function resetListHtml(){
+  return ('<ul class="shopping-list js-shopping-list"></ul>');
+}
+
+function pushItem(state, items, newInput){
+  var itemID=newInput;
+  items.push(newInput);
+  //state.items.push(newInput);
+  //console.log("state:" + state);
+  return state.items;
+}
+
+function resetList(){
+  //console.log('reset list');
+  $('.js-items-div').html("<ul class='shopping-list js-shopping-list'></ul>");
+}
+
+function renderItemList(items){
+  console.log("item list is: ");
+  //reset list
+  resetList();
+  //
+  for (var itemID in items){
+    console.log(items[itemID]);
+    $('.js-shopping-list').append(returnItemHtml(items[itemID]));
+  }  
 }
 
 
-function totalLetterCounter(text){
-  var letters=text.toLowerCase().match(/[a-zA-Z0-9]/gm);
-  var totalLetterCount=letters.length;
-  return totalLetterCount;
+function deleteOnClick(){
+  $('.js-delete-button').click(function(event){
+    var itemID=$(this.closest('li')).find('.js-shopping-item').val();
+    console.log("deleted item is ", itemID);
+    this.closest('li').remove();
+    delete items[itemID];
+  });
 }
 
-function avSentenceLengthCal(text, wordCount){
-  var sentenceCount=(text.match(/(\.|\?|!|")/gm)).length;
-  var avSentenceLength=(wordCount / sentenceCount).toFixed(2);
-  return avSentenceLength;
-}
-
-function uniqueWordCounter(text){
-  var uniqueWords=text.toLowerCase().match(/[\w]/gm);
-  var uniqueWordSet=new Set(text);
-  return uniqueWordSet.size;
-}
-
-function reportOnText(text){
-  var wordCount=wordCounter(text);
-  var totalLetterCount=totalLetterCounter(text);
-  var averageWordLength=(totalLetterCount / wordCount).toFixed(2);
-  var avSentenceLength=avSentenceLengthCal(text, wordCount);
-  var uniqueWordCount=uniqueWordCounter(text);
-  
-  var textReport=$('.js-text-report');
-  textReport.removeClass('hidden');
-  textReport.find('.js-wordCount').text(wordCount);
-  textReport.find('.js-averageWordLength').text(averageWordLength + " letters");
-  textReport.find('.js-averageSentenceLength').text(avSentenceLength + " words");
-  textReport.find('.js-uniqueWordCount').text(uniqueWordCount);
+function checkOnClick(){
+  $('.js-check').click(function(event){
+    console.log("check this item");
+    this.closest('span').removeClass('shopping-item__checked');
+    $(event.currentTarget).addClass('shopping-item__checked');
+  });
 }
 
 
-
-function analyzeIt(){
-   $('.js-userText').submit(function(event){
-      event.preventDefault();
-      var userText =$(this).find('#user-text').val();
-      reportOnText(userText);
-      });
-   }
-                   
-
-
-$(function(){
-  analyzeIt();
-});
-
+$(function userInput(){
+  $('.js-form').submit(function(event){
+    event.preventDefault();
+    var newInput = $(this).find('#user-newItemInput').val();
+    console.log("input new item is: " + newInput);
+    pushItem(state, items, newInput);
+    renderItemList(items);
+    });
+  deleteOnClick();
+  checkOnClick();
+})
