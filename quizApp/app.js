@@ -1,37 +1,37 @@
 var questionLib = [
   {
-    question: "Q1 blah blah",
-    option1: "Q1option 1",
-    option2: "Q1option 2",
-    option3: "Q1option 3",
+    question: "What is Alleged Country of Origin of Ramen",
+    option1: "Japan",
+    option2: "South Africa",
+    option3: "China",
+    answer: [false, false, true]
+  },
+  {
+    question: "What is an item often sold alongside ramen noodles?",
+    option1: "Taco",
+    option2: "Icecream",
+    option3: "Gyoza",
+    answer: [false, false, true]
+  },
+  {
+    question: "Which ones of these are proper ramen flavours?",
+    option1: "Shio",
+    option2: "Miso",
+    option3: "Vanilla",
     answer: [true, true, false]
   },
   {
-    question: "Q2 blah blah",
-    option1: "Q2option 1",
-    option2: "Q2option 2",
-    option3: "Q2option 3",
-    answer: [false, true, true]
+    question: "Which country is the inventor of instant ramen from?",
+    option1: "U.S.A.",
+    option2: "India",
+    option3: "Japan",
+    answer: [false, false, true]
   },
   {
-    question: "Q3 blah blah",
-    option1: "Q3option 1",
-    option2: "Q3option 2",
-    option3: "Q3option 3",
-    answer: [false, true, false]
-  },
-  {
-    question: "Q4 blah blah",
-    option1: "Q4option 1",
-    option2: "Q4option 2",
-    option3: "Q4option 3",
-    answer: [true, false, false]
-  },
-  {
-    question: "Q5 blah blah",
-    option1: "Q5option 1",
-    option2: "Q5option 2",
-    option3: "Q5option 3",
+    question: "What is the color of the broth of Shoyu Ramen",
+    option1: "brown",
+    option2: "pink",
+    option3: "green",
     answer: [false, true, true]  
   }  
 ];
@@ -217,8 +217,6 @@ function question(questionNum, questionLib, correctAnswerNum){
          question(questionNum, questionLib, correctAnswerNum);
          });  
       }
-    
-    
   });  
 }  
 
@@ -228,6 +226,7 @@ function question(questionNum, questionLib, correctAnswerNum){
 $(function(){
   var questionNum=0;
   var correctAnswerNum = 0;
+  $('.js-mainSection').html(mainSectionHtml);
   $('.js-button').click(function(event){
     $('.js-streak').removeClass("hidden");
     question(questionNum, questionLib, correctAnswerNum);
