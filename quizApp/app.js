@@ -1,5 +1,3 @@
-var questionNum=0;
-var correctAnswerNum = 0;
 var questionLib = [
   {
     question: "Q1 blah blah",
@@ -38,6 +36,30 @@ var questionLib = [
   }  
 ];
 
+function mainSectionHtml(){
+  return '<div class="streak js-streak hidden">' +
+      '<div>Your Streak:</div>' +
+      '<div>' +
+        '<span class="js-questionsAnswered"></span>' +
+        '<span>out of 5 questions were answered.</span>' +
+      '</div>' +
+      '<div>' +
+        '<span class="js-correctAnswerNum"></span>' +
+        '<span> correct, </span>' +
+        '<span class="js-wrongAnswerNum"></span>' +
+        '<span> incorrect.</span>' +
+      '</div>' +
+    '</div>' +
+    '<div>' +
+      '<div class="question js-question">' +
+      '<button class="js-button">Start</button>' +
+    '</div>' +
+    '</div>' +
+    '<div class="answerDiv js-answerDiv">' +
+    '<div class="answer js-answer">' +
+      '</div>' +
+    '</div>'
+}
 
 function resetPage(){ 
   $(".js-question").replaceWith('<div class="question js-question">', '</div>');
@@ -45,7 +67,7 @@ function resetPage(){
   console.log("page reset");
 }
 
-function showAnswer(questionNum, questionLibLocal,correctAnswerNum){
+function showAnswer(questionNum, questionLib,correctAnswerNum){
   $(".js-answer").replaceWith('<div class="answer js-answer"></div>');
      answerHtml = '<h3>Wrong!</h3>';
      answerHtml += '<p>';
@@ -55,29 +77,28 @@ function showAnswer(questionNum, questionLibLocal,correctAnswerNum){
      console.log("8.1", questionNum);
      
      
-       if (questionLibLocal[questionNum].answer[0]===true){
-         answerHtml += questionLibLocal[questionNum].option1 + '</br>';
+       if (questionLib[questionNum].answer[0]===true){
+         answerHtml += questionLib[questionNum].option1 + '</br>';
          console.log("13");
        }
-       if (questionLibLocal[questionNum].answer[1]===true){
-         answerHtml += questionLibLocal[questionNum].option2 + '</br>';
+       if (questionLib[questionNum].answer[1]===true){
+         answerHtml += questionLib[questionNum].option2 + '</br>';
        }
-       if (questionLibLocal[questionNum].answer[2]===true){
-         answerHtml += questionLibLocal[questionNum].option3 + '</br>';
+       if (questionLib[questionNum].answer[2]===true){
+         answerHtml += questionLib[questionNum].option3 + '</br>';
        }
      
      answerHtml += '</p>';
      if(questionNum < 4)
         {answerHtml += '<button class="js-nextQuestionButton">Next</button>';}
-     console.log("9.45");
      $(".js-answerDiv").append(answerHtml);
      if(questionNum === 4){
-       endPage(correctAnswerNum);
+       endPage(questionNum, questionLib, correctAnswerNum);
      }
      
 }
 
-function congrats(questionNum, correctAnswerNum){
+function congrats(questionNum, questionLib, correctAnswerNum){
   console.log("101");
   $(".js-answer").replaceWith('<div class="answer js-answer"></div>');
      answerHtml = '<h3>Correct!</h3>';
@@ -85,28 +106,36 @@ function congrats(questionNum, correctAnswerNum){
         {answerHtml += '<p>' + '<button class="js-nextQuestionButton">Next</button>' + '</p>'};
      $(".js-answerDiv").append(answerHtml);
      if(questionNum === 4){
-       endPage(correctAnswerNum);
+       endPage(questionNum, questionLib, correctAnswerNum);
      }
 }
 
-function endPage(correctAnswerNum){
+function endPage(questionNum, questionLib, correctAnswerNum){
 //  $(."js-mainSection").html('<h1>The end!</h1>');
   //resetPage();
-  $('.js-mainSection').empty();
+  
+  //$('.js-mainSection').empty();
+  
   endPageHtml = '<h1>The end</h1>' +
                 '<p>You got ' +
                 correctAnswerNum +
                 ' right out of the total 5 questions. </p>' +
                 '<button class="js-button">Do the quiz again</button>';
+  resetPage();
+  //$('.js-streak').addClass("hidden");
   $('.js-mainSection').html(endPageHtml);
+  $('.js-button').click(function(event){
+    $('.js-mainSection').html(mainSectionHtml);
+    var questionNum=0;
+    var correctAnswerNum = 0;
+    $('.js-streak').removeClass("hidden");
+    question(questionNum, questionLib, correctAnswerNum);
+  });
 
 }
 
 function question(questionNum, questionLib, correctAnswerNum){
-  if (questionNum===4) {
-    console.log("80");
-    endPage(correctAnswerNum);
-  }
+  
   $('.js-questionsAnswered').html(questionNum);
   $('.js-correctAnswerNum').html(correctAnswerNum);
   $('.js-wrongAnswerNum').html(questionNum-correctAnswerNum);
@@ -131,7 +160,7 @@ function question(questionNum, questionLib, correctAnswerNum){
   row += '<button class="js-answer" type="submit">Submit Answer</button>';
   row += '</form>';
   $(".js-question").append(row);
-  console.log("12");
+  console.log("question " + questionNum, " asked");
   
   
   
@@ -145,7 +174,6 @@ function question(questionNum, questionLib, correctAnswerNum){
       else {
         userAnswer[0] = false;
       }
-   console.log("user checked option1: ", userAnswer[0]); 
     var option2checked = $('#option2').prop("checked");
     if (option2checked === true) {
       userAnswer[1] = true;
@@ -153,7 +181,6 @@ function question(questionNum, questionLib, correctAnswerNum){
       else {
         userAnswer[1] = false;
       }
-   console.log("user checked option2: ", userAnswer[1]);
     var option3checked = $('#option3').prop("checked");
     if (option3checked === true) {
       userAnswer[2] = true;
@@ -161,35 +188,28 @@ function question(questionNum, questionLib, correctAnswerNum){
       else {
         userAnswer[2] = false;
       }
-   console.log("user checked option3: ", userAnswer[2]); 
-   console.log("user's answer to  Q1: ", userAnswer);
-  
   
   //compare user's answer to current answer
-   console.log("the correct answer to Q1 is: "); 
+   console.log("the correct answer to Q ", questionNum,  "is: "); 
    console.log(questionLib[questionNum].answer);
 
    var succeeded = true;
    for (var k=0; k<=2; k++) {
      if (userAnswer[k] != questionLib[questionNum].answer[k]) {
        succeeded = false;
-       console.log("7");
        }
    }
-   console.log("8");
    if (succeeded===false) {
      showAnswer(questionNum, questionLib,correctAnswerNum);
-     console.log("9.46");
      $(".js-nextQuestionButton").click(function(event){
-         console.log("9.5");
-         questionNum=questionNum+1;
+         questionNum = questionNum+1;
          console.log("10", questionNum);
          question(questionNum, questionLib, correctAnswerNum);
      });
     
    }
       else {
-         congrats(questionNum, correctAnswerNum);
+         congrats(questionNum, questionLib, correctAnswerNum);
          questionNum=questionNum+1;
          correctAnswerNum=correctAnswerNum+1;
          console.log("10 " + questionNum);
@@ -205,10 +225,13 @@ function question(questionNum, questionLib, correctAnswerNum){
 
 
 //starting the quiz by clicking the start button
-$('.js-button').click(function(event){
-  $('.js-streak').removeClass("hidden");
-  question(questionNum, questionLib, correctAnswerNum);
+$(function(){
+  var questionNum=0;
+  var correctAnswerNum = 0;
+  $('.js-button').click(function(event){
+    $('.js-streak').removeClass("hidden");
+    question(questionNum, questionLib, correctAnswerNum);
+  });
 });
-
 
 
