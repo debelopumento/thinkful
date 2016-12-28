@@ -45,7 +45,7 @@ function resetPage(){
   console.log("page reset");
 }
 
-function showAnswer(questionNum, questionLibLocal){
+function showAnswer(questionNum, questionLibLocal,correctAnswerNum){
   $(".js-answer").replaceWith('<div class="answer js-answer"></div>');
      answerHtml = '<h3>Wrong!</h3>';
      answerHtml += '<p>';
@@ -67,22 +67,39 @@ function showAnswer(questionNum, questionLibLocal){
        }
      
      answerHtml += '</p>';
-     answerHtml += '<button class="js-nextQuestionButton">Next</button>';
+     if(questionNum < 4)
+        {answerHtml += '<button class="js-nextQuestionButton">Next</button>';}
      console.log("9.45");
      $(".js-answerDiv").append(answerHtml);
+     if(questionNum === 4){
+       endPage(correctAnswerNum);
+     }
+     
 }
 
-function congrats(questionNum){
+function congrats(questionNum, correctAnswerNum){
   console.log("101");
   $(".js-answer").replaceWith('<div class="answer js-answer"></div>');
      answerHtml = '<h3>Correct!</h3>';
-     answerHtml += '<p>' + '<button class="js-nextQuestionButton">Next</button>' + '</p>';
+     if(questionNum < 4)
+        {answerHtml += '<p>' + '<button class="js-nextQuestionButton">Next</button>' + '</p>'};
      $(".js-answerDiv").append(answerHtml);
+     if(questionNum === 4){
+       endPage(correctAnswerNum);
+     }
 }
 
 function endPage(correctAnswerNum){
 //  $(."js-mainSection").html('<h1>The end!</h1>');
-  console.log("90");
+  //resetPage();
+  $('.js-mainSection').empty();
+  endPageHtml = '<h1>The end</h1>' +
+                '<p>You got ' +
+                correctAnswerNum +
+                ' right out of the total 5 questions. </p>' +
+                '<button class="js-button">Do the quiz again</button>';
+  $('.js-mainSection').html(endPageHtml);
+
 }
 
 function question(questionNum, questionLib, correctAnswerNum){
@@ -161,7 +178,7 @@ function question(questionNum, questionLib, correctAnswerNum){
    }
    console.log("8");
    if (succeeded===false) {
-     showAnswer(questionNum, questionLib);
+     showAnswer(questionNum, questionLib,correctAnswerNum);
      console.log("9.46");
      $(".js-nextQuestionButton").click(function(event){
          console.log("9.5");
@@ -172,7 +189,7 @@ function question(questionNum, questionLib, correctAnswerNum){
     
    }
       else {
-         congrats(questionNum);
+         congrats(questionNum, correctAnswerNum);
          questionNum=questionNum+1;
          correctAnswerNum=correctAnswerNum+1;
          console.log("10 " + questionNum);
