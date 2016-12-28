@@ -47,6 +47,41 @@ function resetPage(){
   console.log("page reset");
 }
 
+function showAnswer(questionNum, questionLibLocal){
+  $(".js-answer").replaceWith('<div class="answer js-answer"></div>');
+     answerHtml = '<h3>Wrong!</h3>';
+     answerHtml += '<p>';
+     answerHtml += 'The answer to question ';
+     answerHtml += questionNum+1;
+     answerHtml += ' is: ' + '</br>';
+     console.log("8.1", questionNum);
+     
+     
+       if (questionLibLocal[questionNum].answer[0]===true){
+         answerHtml += questionLibLocal[questionNum].option1 + '</br>';
+         console.log("13");
+       }
+       if (questionLibLocal[questionNum].answer[1]===true){
+         answerHtml += questionLibLocal[questionNum].option2 + '</br>';
+       }
+       if (questionLibLocal[questionNum].answer[2]===true){
+         answerHtml += questionLibLocal[questionNum].option3 + '</br>';
+       }
+     
+     answerHtml += '</p>';
+     answerHtml += '<button class="js-nextQuestionButton">Next</button>';
+     console.log("9.45");
+     $(".js-answerDiv").append(answerHtml);
+}
+
+function congrats(questionNum){
+  console.log("101");
+  $(".js-answer").replaceWith('<div class="answer js-answer"></div>');
+     answerHtml = '<h3>Correct!</h3>';
+     answerHtml += '<p>' + '<button class="js-nextQuestionButton">Next</button>' + '</p>';
+     $(".js-answerDiv").append(answerHtml);
+}
+
 function question(questionNum, questionLib){
   //print current question
   resetPage();
@@ -70,7 +105,7 @@ function question(questionNum, questionLib){
   row += '<button class="js-answer" type="submit">Submit Answer</button>';
   row += '</form>';
   $(".js-question").append(row);
-  console.log("after appending all the rows.");
+  console.log("12");
   
   
   
@@ -117,16 +152,7 @@ function question(questionNum, questionLib){
    }
    console.log("8");
    if (succeeded===false) {
-     //show the correct answer
-     //$(".js-answer").replaceWith('<div class="answer js-answer">', '</div>');
-     $(".js-answer").replaceWith('<div class="answer js-answer"></div>');
-     answerHtml = '<h3>Wrong!</h3>'
-     answerHtml += '<p>';
-     answerHtml += 'Q1 answer blah blah';
-     answerHtml += '</p>';
-     answerHtml += '<button class="js-nextQuestionButton">Next</button>';
-     console.log("9.45");
-     $(".js-answerDiv").append(answerHtml);
+     showAnswer(questionNum, questionLib);
      console.log("9.46");
      $(".js-nextQuestionButton").click(function(event){
          console.log("9.5");
@@ -137,13 +163,14 @@ function question(questionNum, questionLib){
     
    }
       else {
-         questionNum++;
-         console.log("10");
+         congrats(questionNum);
+         questionNum=questionNum+1;
+         console.log("10 " + questionNum);
+         $(".js-nextQuestionButton").click(function(event){
          question(questionNum, questionLib);
+         });  
       }
     
-    
-    //and below is the move on code
     
   });  
 }  
