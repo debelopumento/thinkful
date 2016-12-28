@@ -3,14 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" type="text/css" href="main.css">
   <title>JS Bin</title>
 </head>
 <body>
   <main class="js-main">
     <h1>Quiz ABC</h1>
-    <div class="record js-record">
-     
-      
+    <div class="streak js-streak hidden">
+      <div>Your Streak:</div>
+      <div>
+        <span class="js-questionsAnswered"></span>
+        <span>out of 5 questions were answered.</span>
+      </div>
+      <div>
+        <span class="js-correctAnswerNum"></span>
+        <span> correct, </span>
+        <span class="js-wrongAnswerNum"></span>
+        <span> incorrect.</span>
+      </div>  
     </div>
     <div>
       <div class="question js-question">

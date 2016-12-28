@@ -1,8 +1,6 @@
 var questionNum=0;
-  var correctAnswer = 0;
-  var wrongAnswer = 0;
-  var numOfQsAnswered = 0;
-  var questionLib = [
+var correctAnswerNum = 0;
+var questionLib = [
   {
     question: "Q1 blah blah",
     option1: "Q1option 1",
@@ -82,8 +80,11 @@ function congrats(questionNum){
      $(".js-answerDiv").append(answerHtml);
 }
 
-function question(questionNum, questionLib){
+function question(questionNum, questionLib, correctAnswerNum){
   //print current question
+  $('.js-questionsAnswered').html(questionNum);
+  $('.js-correctAnswerNum').html(correctAnswerNum);
+  $('.js-wrongAnswerNum').html(questionNum-correctAnswerNum);
   resetPage();
   row = '<p>';
   row += questionLib[questionNum].question;
@@ -158,7 +159,7 @@ function question(questionNum, questionLib){
          console.log("9.5");
          questionNum=questionNum+1;
          console.log("10", questionNum);
-         question(questionNum, questionLib);
+         question(questionNum, questionLib, correctAnswerNum);
      });
     
    }
@@ -167,7 +168,7 @@ function question(questionNum, questionLib){
          questionNum=questionNum+1;
          console.log("10 " + questionNum);
          $(".js-nextQuestionButton").click(function(event){
-         question(questionNum, questionLib);
+         question(questionNum, questionLib, correctAnswerNum);
          });  
       }
     
@@ -175,9 +176,11 @@ function question(questionNum, questionLib){
   });  
 }  
 
+
+
 //starting the quiz by clicking the start button
 $('.js-button').click(function(event){
-    question(questionNum, questionLib);
+    question(questionNum, questionLib, correctAnswerNum);
 });
 
 
