@@ -80,8 +80,16 @@ function congrats(questionNum){
      $(".js-answerDiv").append(answerHtml);
 }
 
+function endPage(correctAnswerNum){
+//  $(."js-mainSection").html('<h1>The end!</h1>');
+  console.log("90");
+}
+
 function question(questionNum, questionLib, correctAnswerNum){
-  //print current question
+  if (questionNum===4) {
+    console.log("80");
+    endPage(correctAnswerNum);
+  }
   $('.js-questionsAnswered').html(questionNum);
   $('.js-correctAnswerNum').html(correctAnswerNum);
   $('.js-wrongAnswerNum').html(questionNum-correctAnswerNum);
