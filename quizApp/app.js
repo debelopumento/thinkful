@@ -166,6 +166,7 @@ function question(questionNum, questionLib, correctAnswerNum){
       else {
          congrats(questionNum);
          questionNum=questionNum+1;
+         correctAnswerNum=correctAnswerNum+1;
          console.log("10 " + questionNum);
          $(".js-nextQuestionButton").click(function(event){
          question(questionNum, questionLib, correctAnswerNum);
@@ -180,7 +181,8 @@ function question(questionNum, questionLib, correctAnswerNum){
 
 //starting the quiz by clicking the start button
 $('.js-button').click(function(event){
-    question(questionNum, questionLib, correctAnswerNum);
+  $('.js-streak').removeClass("hidden");
+  question(questionNum, questionLib, correctAnswerNum);
 });
 
 
