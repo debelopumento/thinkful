@@ -32,7 +32,7 @@ var questionLib = [
     option1: "brown",
     option2: "pink",
     option3: "green",
-    answer: [false, true, true]  
+    answer: [true, false, false]  
   }  
 ];
 
@@ -52,7 +52,7 @@ function mainSectionHtml(){
     '</div>' +
     '<div>' +
       '<div class="question js-question">' +
-      '<button class="js-button">Start</button>' +
+      '<button class="startButton js-button">Start</button>' +
     '</div>' +
     '</div>' +
     '<div class="answerDiv js-answerDiv">' +
@@ -71,9 +71,7 @@ function showAnswer(questionNum, questionLib,correctAnswerNum){
   $(".js-answer").replaceWith('<div class="answer js-answer"></div>');
      answerHtml = '<h3>Wrong!</h3>';
      answerHtml += '<p>';
-     answerHtml += 'The answer to question ';
-     answerHtml += questionNum+1;
-     answerHtml += ' is: ' + '</br>';
+     answerHtml += 'The correct answer is: ' + '</br>';
      console.log("8.1", questionNum);
      
      
@@ -89,11 +87,17 @@ function showAnswer(questionNum, questionLib,correctAnswerNum){
        }
      
      answerHtml += '</p>';
-     if(questionNum < 4)
-        {answerHtml += '<button class="js-nextQuestionButton">Next</button>';}
-     $(".js-answerDiv").append(answerHtml);
+     if(questionNum < 4) {
+        answerHtml += '<button class="js-nextQuestionButton">Next</button>';
+        $(".js-answerDiv").append(answerHtml);
+     }
+     
      if(questionNum === 4){
-       endPage(questionNum, questionLib, correctAnswerNum);
+       answerHtml += '<button class="js-nextQuestionButton">Finish</button>';
+       $(".js-answerDiv").append(answerHtml);
+       $('.js-nextQuestionButton').click(function(event){
+          endPage(questionNum, questionLib, correctAnswerNum);
+       });  
      }
      
 }
@@ -111,18 +115,12 @@ function congrats(questionNum, questionLib, correctAnswerNum){
 }
 
 function endPage(questionNum, questionLib, correctAnswerNum){
-//  $(."js-mainSection").html('<h1>The end!</h1>');
-  //resetPage();
-  
-  //$('.js-mainSection').empty();
-  
-  endPageHtml = '<h1>The end</h1>' +
+  endPageHtml = '<h3>Congratulations!</h3>' +
                 '<p>You got ' +
                 correctAnswerNum +
                 ' right out of the total 5 questions. </p>' +
-                '<button class="js-button">Do the quiz again</button>';
+                '<button class="js-button">Try again</button>';
   resetPage();
-  //$('.js-streak').addClass("hidden");
   $('.js-mainSection').html(endPageHtml);
   $('.js-button').click(function(event){
     $('.js-mainSection').html(mainSectionHtml);
