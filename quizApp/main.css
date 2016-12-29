@@ -9,6 +9,12 @@ header {
   display: flex;
 }
 
+@media (max-width: 400px) {
+  header {
+    height: 100px;
+  }
+}
+
 h1 {
   font-size: 55px;
   color: white;
@@ -17,12 +23,24 @@ h1 {
   flex:1;
 }
 
+@media (max-width: 400px) {
+  h1 {
+    font-size: 40px;
+  }
+}
+
+
+.questionFont {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 div.hidden {
   visibility: hidden;
 }
 
 body {
-  background-color: lightgrey;
+  background-color: #EEEEEE;
   font-family: "Verdana", Times, serif;
 }
 
@@ -32,17 +50,29 @@ main {
   padding-top: 50px;
 }
 
+
+@media(min-width: 640px){
 .streak {
   display: inline;
+  padding: 15px;
   margin-top: 40px;
   margin: 20px;
   text-align: center;
-}
+  background-color: white;
+  border: solid 2px #333333;
+  border-radius: 5px;
+}}
 
 .streakFont {
   margin-right: 5px;
   margin-left: 5px;
   flex: 1;
+}
+
+.streakNumFont {
+  font-size: +1;
+  color: green;
+  font-weight: bold;
 }
 
 .startButton {
@@ -51,4 +81,65 @@ main {
   border-radius: 5%;
   color: #FFFFFF;
   font-weight: 100px;
+}
+
+@media (max-width: 400px) {
+  .startButton {
+    font-size: 15px;
+  }
+}
+
+.questionDiv {
+  color: #333333;
+  padding-top: 30px;
+}
+
+.question {
+  font-size: 20px;
+}
+
+.submitAnswerDiv {
+  padding-top: 30px;
+}
+
+.choice {
+  color: green;
+  font-size: 20px;
+  display: inline;
+  padding-left: 5px;
+  padding-right: 15px;
+
+}
+
+.wrong {
+  color: red;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+.answerFont {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.submitAnswerButton {
+  height: 50px;
+  color: white;
+  font-size: 15px;
+  background-color: #BBBBBB;
+  border: 2px solid #666666;
+  border-radius: 3px;
+  margin: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.congrats {
+  font-size: 20px;
+  color: green;
+
+
+ @media only  
 }

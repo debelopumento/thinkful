@@ -1,6 +1,6 @@
 var questionLib = [
   {
-    question: "What is Alleged Country of Origin of Ramen",
+    question: "What is Alleged Country of Origin of Ramen?",
     option1: "Japan",
     option2: "South Africa",
     option3: "China",
@@ -38,9 +38,9 @@ var questionLib = [
 
 function mainSectionHtml(){
   return '<div class="streak js-streak col-12 hidden">' +
-        '<span class="streakFont">Your Streak:</span> <span class="js-questionsAnswered streakFont"></span><span>out of 5 questions were answered.</span><span class="js-correctAnswerNum streakFont"></span><span> correct, </span><span class="js-wrongAnswerNum streakFont"></span><span> incorrect.</span>' +
+        '<span class="streakFont">Your Streak:</span> <span class="js-questionsAnswered streakNumFont"></span><span> out of 5 questions were answered.</span><span class="js-correctAnswerNum streakFont streakNumFont"></span><span> correct, </span><span class="js-wrongAnswerNum streakFont streakNumFont"></span><span> incorrect.</span>' +
     '</div>' +
-    '<div>' +
+    '<div class="questionDiv">' +
       '<div class="question js-question">' +
       '<button class="startButton js-button">Start</button>' +
     '</div>' +
@@ -59,8 +59,8 @@ function resetPage(){
 
 function showAnswer(questionNum, questionLib,correctAnswerNum){
   $(".js-answer").replaceWith('<div class="answer js-answer"></div>');
-     answerHtml = '<h3>Wrong!</h3>';
-     answerHtml += '<p>';
+     answerHtml = '<h3 class="wrong">WRONG!</h3>';
+     answerHtml += '<div class="answerDiv"><p class="answerFont">';
      answerHtml += 'The correct answer is: ' + '</br>';
      console.log("8.1", questionNum);
      
@@ -76,14 +76,14 @@ function showAnswer(questionNum, questionLib,correctAnswerNum){
          answerHtml += questionLib[questionNum].option3 + '</br>';
        }
      
-     answerHtml += '</p>';
+     answerHtml += '</p></div>';
      if(questionNum < 4) {
-        answerHtml += '<button class="js-nextQuestionButton">Next</button>';
+        answerHtml += '<button class="js-nextQuestionButton submitAnswerButton">Next</button>';
         $(".js-answerDiv").append(answerHtml);
      }
      
      if(questionNum === 4){
-       answerHtml += '<button class="js-nextQuestionButton">Finish</button>';
+       answerHtml += '<button class="js-nextQuestionButton submitAnswerButton">Finish</button>';
        $(".js-answerDiv").append(answerHtml);
        $('.js-nextQuestionButton').click(function(event){
           endPage(questionNum, questionLib, correctAnswerNum);
@@ -97,7 +97,7 @@ function congrats(questionNum, questionLib, correctAnswerNum){
   $(".js-answer").replaceWith('<div class="answer js-answer"></div>');
      answerHtml = '<h3>Correct!</h3>';
      if(questionNum < 4)
-        {answerHtml += '<p>' + '<button class="js-nextQuestionButton">Next</button>' + '</p>'};
+        {answerHtml += '<p>' + '<button class="js-nextQuestionButton submitAnswerButton">Next</button>' + '</p>'};
      $(".js-answerDiv").append(answerHtml);
      if(questionNum === 4){
        endPage(questionNum, questionLib, correctAnswerNum);
@@ -105,11 +105,11 @@ function congrats(questionNum, questionLib, correctAnswerNum){
 }
 
 function endPage(questionNum, questionLib, correctAnswerNum){
-  endPageHtml = '<h3>Congratulations!</h3>' +
+  endPageHtml = '<h3 class="congrats">Congratulations!</h3>' +
                 '<p>You got ' +
                 correctAnswerNum +
                 ' right out of the total 5 questions. </p>' +
-                '<button class="js-button">Try again</button>';
+                '<button class="js-button submitAnswerButton">Try again</button>';
   resetPage();
   $('.js-mainSection').html(endPageHtml);
   $('.js-button').click(function(event){
@@ -128,24 +128,24 @@ function question(questionNum, questionLib, correctAnswerNum){
   $('.js-correctAnswerNum').html(correctAnswerNum);
   $('.js-wrongAnswerNum').html(questionNum-correctAnswerNum);
   resetPage();
-  row = '<p>';
+  row = '<p class="questionFont">';
   row += questionLib[questionNum].question;
   row += '</p>';
   row += '<form class="js-form">';
   row += '<input type="checkbox" name="option1" id="option1" value="0">' +
-  '<label for="option1">';
+  '<label class="choice" for="option1">';
   row += questionLib[questionNum].option1;
   row += '</label>';
   row += '<input type="checkbox" name="option2" id="option2" value="1">' +
-  '<label for="option2">';
+  '<label class="choice" for="option2">';
   row += questionLib[questionNum].option2;
   row += '</label>';
   row += '<input type="checkbox" name="option3" id="option3" value="2">' +
-  '<label for="option3">';
+  '<label class="choice" for="option3">';
   row += questionLib[questionNum].option3;
   row += '</label>';
   console.log("5");
-  row += '<button class="js-answer" type="submit">Submit Answer</button>';
+  row += '<div class="submitAnswerDiv"><button class="js-answer submitAnswerButton" type="submit">Submit Answer</button></div>';
   row += '</form>';
   $(".js-question").append(row);
   console.log("question " + questionNum, " asked");
