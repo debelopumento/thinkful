@@ -37,18 +37,8 @@ var questionLib = [
 ];
 
 function mainSectionHtml(){
-  return '<div class="streak js-streak hidden">' +
-      '<div>Your Streak:</div>' +
-      '<div>' +
-        '<span class="js-questionsAnswered"></span>' +
-        '<span>out of 5 questions were answered.</span>' +
-      '</div>' +
-      '<div>' +
-        '<span class="js-correctAnswerNum"></span>' +
-        '<span> correct, </span>' +
-        '<span class="js-wrongAnswerNum"></span>' +
-        '<span> incorrect.</span>' +
-      '</div>' +
+  return '<div class="streak js-streak col-12 hidden">' +
+        '<span class="streakFont">Your Streak:</span> <span class="js-questionsAnswered streakFont"></span><span>out of 5 questions were answered.</span><span class="js-correctAnswerNum streakFont"></span><span> correct, </span><span class="js-wrongAnswerNum streakFont"></span><span> incorrect.</span>' +
     '</div>' +
     '<div>' +
       '<div class="question js-question">' +

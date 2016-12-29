@@ -1,26 +1,54 @@
 header {
-  background: url("images/imgHeader.jpg") no-repeat #AAAAAA center 100%;
+  background: url("images/imgHeader.jpg") no-repeat #888888 center 100%;
   background-size: 100%;
   background-blend-mode: multiply;
   background-position:50% 10%;
   margin-top: 30px;
   height: 150px;
   width: 100%;
+  display: flex;
 }
 
-h1{
+h1 {
   font-size: 55px;
   color: white;
   text-align: center;
+  vertical-align: middle;
+  flex:1;
 }
 
-div.hidden{
+div.hidden {
   visibility: hidden;
 }
 
+body {
+  background-color: lightgrey;
+  font-family: "Verdana", Times, serif;
+}
 
 
-
-main{
+main {
   text-align: center;
+  padding-top: 50px;
+}
+
+.streak {
+  display: inline;
+  margin-top: 40px;
+  margin: 20px;
+  text-align: center;
+}
+
+.streakFont {
+  margin-right: 5px;
+  margin-left: 5px;
+  flex: 1;
+}
+
+.startButton {
+  font-size: 30px;
+  border: 2px solid darkgrey;
+  border-radius: 5%;
+  color: #FFFFFF;
+  font-weight: 100px;
 }
