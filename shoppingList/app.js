@@ -1,23 +1,44 @@
 var state = {
-  items: ["apples", "oranges", "milk", "bread"]
+  items: [
+    {itemName: "apples",
+     itemChecked: false
+    }, 
+    {itemName: "oranges", 
+     itemChecked: false
+    },
+    {itemName: "milk",
+     itemChecked: true 
+    },
+    {itemName: "bread",
+     itemChecked: false
+    }
+  ]
 };
 
 
 
-function returnItemHtml(item){
-  return ('<li>' +
+function returnItemHtml(localState, currentItemID){
+  var itemArrey = localState.items;
+  var itemHtml = '<li>' +
   '<span class="shopping-item js-shopping-item">' + 
-  item +
+  itemArrey[currentItemID].itemName +
   '</span>' + 
-    '<div class="shopping-item-controls">' +
-      '<button class="js-shopping-item-toggle js-check">' +
-        '<span class="button-label">check</span>' +
+    '<div class="shopping-item-controls">';
+  if (itemArrey[currentItemID].itemChecked === true) {
+    itemHtml += '<button class="js-shopping-item-toggle shopping-item__checked js-check">';
+  }
+    else {
+      itemHtml += '<button class="js-shopping-item-toggle js-check">';
+    }
+        
+   itemHtml += '<span class="button-label">check</span>' +
       '</button>' +
       '<button class="js-shopping-item-delete js-delete-button">' +
         '<span class="button-label">delete</span>' +
       '</button>' +
     '</div>' +
-  '</li>');
+  '</li>';
+  return itemHtml;
 }
 
 function resetListHtml(){
@@ -25,11 +46,13 @@ function resetListHtml(){
 }
 
 function pushItem(localState, newInput){
-  var itemID=newInput;
-  //items.push(newInput);
-  localState.items.push(newInput);
-  //console.log("state:" + state);
-  return localState.items, localState;
+  var newItem = {
+    itemName: newInput,
+    itemChecked: false
+  };
+  console.log("itemNameBBB: " + newItem.itemName)
+  localState.items.push(newItem);
+  renderItemList(localState);
 }
 
 function resetList(){
@@ -37,49 +60,59 @@ function resetList(){
 }
 
 function renderItemList(localState){
-  console.log("item list is: ");
-  //reset list
   resetList();
-  //
-  var localItems=localState.items;
-  for (var itemID in localItems){
-    console.log(localItems[itemID]);
-    $('.js-shopping-list').append(returnItemHtml(localItems[itemID]));
+  var itemArrey=localState.items;
+  for (var itemID in itemArrey){
+    $('.js-shopping-list').append(returnItemHtml(localState, itemID));
   }
-  deleteOnClick(localState);
-  checkOnClick(localState);
-}
-
-
-function deleteOnClick(localState){
+  //evenet listeners
   $('.js-delete-button').click(function(event){
-    this.closest('li').remove();
-    var itemName = $(this).closest('li').find('.shopping-item').text();
-    for (var i=0; i <= localState.items.length; i++){
-      if (localState.items[i] = itemName){
-        localState.items.splice(i, 1);
-      }
-    renderItemList(localState);
-    }
+    var deletedItemName = $(this).closest('li').find('.shopping-item').text();
+    deleteOnClick(state, deletedItemName);
   });
+  $('.js-check').click(function(event){
+    var checkedItemName = $(this).closest('li').find('.shopping-item').text();
+    checkOnClick(state, checkedItemName);
+  });  
 }
 
-function checkOnClick(localState){
-  $('.js-check').click(function(event){
-    console.log("check this item");
-    $(this).closest('li').toggleClass('shopping-item__checked');
-  });
+
+function deleteOnClick(localState, localItemName){
+    var itemArrey = localState.items;
+    for (var i=0; i <= itemArrey.length; i++) {
+      if (itemArrey[i].itemName === localItemName) {
+        itemArrey.splice(i, 1);
+      }}
+}
+
+function checkOnClick(localState, checkedItemName){
+    console.log("90");
+    console.log("checked item name: " + checkedItemName);
+    var itemArrey = localState.items;
+    for (var i=0; i <= itemArrey.length; i++) {
+      if (itemArrey.itemName === checkedItemName) {
+        localState.items.itemChecked = !localState.items.itemChecked;
+      }
+    }
 }
 
 
 $(function userInput(){
+  renderItemList(state);
   $('.js-form').submit(function(event){
     event.preventDefault();
     var newInput = $(this).find('#user-newItemInput').val();
-    console.log("input new item is: " + newInput);
+    console.log("1");
     pushItem(state, newInput);
-    renderItemList(state);
     });
-  //deleteOnClick(state);
-  checkOnClick(state);
-})
+  $('.js-delete-button').click(function(event){
+    var deletedItemName = $(this).closest('li').find('.shopping-item').text();
+    deleteOnClick(state, deletedItemName);
+    renderItemList(state);
+  });
+  $('.js-check').click(function(event){
+    var checkedItemName = $(this).closest('li').find('.shopping-item').text();
+    checkOnClick(state, checkedItemName);
+    renderItemList(state);
+  });
+});

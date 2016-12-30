@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" type="text/css" href="main.css">
   <title>JS Bin</title>
 </head>
 <body>
@@ -13,8 +14,52 @@
     <button type="submit">Add Me</button>
   </form>
   
-  <div class="js-item-div">
-    <ul class="shopping-list js-shopping-list">
+  <div class="js-items-div">
+    <ul class="shopping-list">
+      <li>
+        <span class="shopping-item js-shopping-item">apples</span>
+        <div class="shopping-item-controls">
+          <button class="shopping-item-toggle js-check">
+            <span class="button-label">check</span>
+          </button>
+          <button class="shopping-item-delete js-delete-button">
+            <span class="button-label">delete</span>
+          </button>
+        </div>
+      </li>
+      <li>
+        <span class="shopping-item js-shopping-item">oranges</span>
+        <div class="shopping-item-controls">
+          <button class="shopping-item-toggle js-check">
+            <span class="button-label">check</span>
+          </button>
+          <button class="shopping-item-delete js-delete-button">
+            <span class="button-label">delete</span>
+          </button>
+        </div>
+      </li>
+      <li>
+        <span class="shopping-item shopping-item__checked js-shopping-item">milk</span>
+        <div class="shopping-item-controls">
+          <button class="shopping-item-toggle js-check">
+            <span class="button-label">check</span>
+          </button>
+          <button class="shopping-item-delete js-delete-button">
+            <span class="button-label">delete</span>
+          </button>
+        </div>
+      </li>
+      <li>
+        <span class="shopping-item js-shopping-item">bread</span>
+        <div class="shopping-item-controls">
+          <button class="shopping-item-toggle js-check">
+            <span class="button-label">check</span>
+          </button>
+          <button class="shopping-item-delete js-delete-button">
+            <span class="button-label">delete</span>
+          </button>
+        </div>
+      </li>
     </ul>
   </div>
   <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
