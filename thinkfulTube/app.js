@@ -10,8 +10,9 @@ function renderResults(results){
 				row += "<li>";
 				row += "<h3>" + video.snippet.title + "</h3>";
 				row += "<a href='https://www.youtube.com/watch?v=" + video.id.videoId + "</a>";
+				row += '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + video.id.videoId + '"frameborder="0" allowfullscreen></iframe>';
 				console.log("10", video.snippet);
-				row += '<img src="' + video.snippet.thumbnails.default.url + '">';
+				//row += '<img src="' + video.snippet.thumbnails.default.url + '">';
 				row += "</li>"
 		}
 	$('.js-search-results').html(row);
