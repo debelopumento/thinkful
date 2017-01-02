@@ -10,7 +10,9 @@ function renderResults(results){
 				row += "<li>";
 				row += "<h3>" + video.snippet.title + "</h3>";
 				row += "<a href='https://www.youtube.com/watch?v=" + video.id.videoId + "</a>";
-				row += "</li>";
+				console.log("10", video.snippet);
+				row += '<img src="' + video.snippet.thumbnails.default.url + '">';
+				row += "</li>"
 		}
 	$('.js-search-results').html(row);
 }
