@@ -17,6 +17,7 @@ main {
 	margin-right: 5px;
 	border: 2px black solid;
 	background-size: 100% 100%;
+	color: rgba(0,0,0,0);
 }	
 
 .X {
