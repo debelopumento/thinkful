@@ -7,7 +7,6 @@ $(function(){
 
 
 function renderBoard(){
-	console.log("3");
 	var boardHtml = '';
 	for (i=1; i <= rowLength; i++) {
 		boardHtml += '<div class="boardRow">';
@@ -17,7 +16,6 @@ function renderBoard(){
 		boardHtml += '</div>';
 	}
 	$('.js-board').html(boardHtml);
-	console.log(4);
 	playGame();
 }
 
@@ -29,7 +27,6 @@ function playGame() {
 		for (j=1; j <= columnLength; j++) {
 			var currentUnit = "unknown";
 			row[i][j] = currentUnit;
-			console.log("2");
 		}
 	}
 	
@@ -58,13 +55,14 @@ function playGame() {
 		}
 		if (gameOver===true) {alertFinish();}
 		//check column
+		var gameOver = true;
 		for (i=1; i <=3; i++) {
 			if (row[currentRow][currentColumn] != row[i][currentColumn]) {gameOver = false;}
 		}
 		if (gameOver===true) {alertFinish();}
 		//check diagonal
-		if (row[1,1]===row[currentRow][currentColumn] && row[2,2]===row[currentRow][currentColumn] && row[3,3]===row[currentRow][currentColumn]) {alertFinish();}
-		if (row[1,3]===row[currentRow][currentColumn] && row[2,2]===row[currentRow][currentColumn] && row[3,1]===row[currentRow][currentColumn]) {alertFinish();}
+		if (row[1][1]===row[currentRow][currentColumn] && row[2][2]===row[currentRow][currentColumn] && row[3][3]===row[currentRow][currentColumn]) {alertFinish();}
+		if (row[1][3]===row[currentRow][currentColumn] && row[2][2]===row[currentRow][currentColumn] && row[3][1]===row[currentRow][currentColumn]) {alertFinish();}
 		//
 
 		XsTurn = !XsTurn;
