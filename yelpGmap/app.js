@@ -1,3 +1,5 @@
+//Yelp api documentation: https://www.yelp.com/developers/documentation/v3/get_started
+
 var yelpAPIurl = "https://api.yelp.com/v3/businesses/search";
 var appID = "lXWZb7kmxUqaH0ouzpmy0w";
 var appSecret = "ZxUb1UOGV28dPS4dLLN8lq3EGxsqcLLjeMoDqQftDynULxDHclV6JSkOISwUCmJV";
@@ -24,17 +26,24 @@ function watchSubmit() {
 
 function getAccessToken() {
 	$.ajax({
-			'url': "https://api.yelp.com/oauth2/token",
-			'grant_type': "client_credentials",
-			'client_id': appID,
-			'client_secret': appSecret,
-			'dataType': "jsonp"
-		}
+			url: "https://api.yelp.com/oauth2/token",
+			type: "POST",
+			callback: '?',
+			grant_type: "client_credentials",
+			client_id: "lXWZb7kmxUqaH0ouzpmy0w",
+			client_secret: "ZxUb1UOGV28dPS4dLLN8lq3EGxsqcLLjeMoDqQftDynULxDHclV6JSkOISwUCmJV",
+			dataType: "jsonp",
+			success: function() { alert("Success"); },
+			error: function() { alert('Failed!'); },
+		},
 			//set header
 			
 			//
-			
-	)
+		function(access_token) {
+			console.log("7");
+			console.log(access_token);
+		}
+	);
 }	
 
 function getSearchResults(userInputSearchItem) {
