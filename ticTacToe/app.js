@@ -6,7 +6,6 @@ $(function(){
 });
 
 function createBoard() {
-	
 	console.log ("1");
 	var row = [];
 	for (i=1; i <= rowLength; i++) {
@@ -26,10 +25,22 @@ function renderBoard(){
 	for (i=1; i <= rowLength; i++) {
 		boardHtml += '<div class="boardRow">';
 		for (j=1; j <= columnLength; j++) {
-			boardHtml += '<span class="unit empty"></span>';
+			boardHtml += '<span class="unit empty js-unit"></span>';
 		}
 		boardHtml += '</div>';
 	}
 	$('.js-board').html(boardHtml);
 	console.log(4);
+	playGame();
+}
+
+function playGame() {
+	var XsTurn = true;
+	$('.js-unit').click(function(event){
+		if (XsTurn===true) {
+			$(event.currentTarget).toggleClass('X');
+		}
+		else {$(event.currentTarget).toggleClass('O');}
+		XsTurn = !XsTurn;
+	});	
 }	
