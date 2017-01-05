@@ -31,7 +31,7 @@ function getResult (userInputSearchLocation) {
                 };
         
                 var terms = 'ramen';
-                var near = 'san jose';
+                var near = userInputSearchLocation;
                 console.log(12, userInputSearchLocation);
         
                 var accessor = {
