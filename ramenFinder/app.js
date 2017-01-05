@@ -1,25 +1,33 @@
-console.log(20);
-
 var map;
-      function initMap() {
+
+function initMap() {
+        //var localLat=coordState.latN;
+        //var localLng=coordState.LngN;
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -35, lng: 150},
-          zoom: 15
+          center: {lat: 37.773972, lng: -122.431297},
+          zoom: 12
         });
       }
 
+function swapMap(navLat, navLng) {
+        //var localLat=coordState.latN;
+        //var localLng=coordState.LngN;
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: navLat, lng: navLng},
+          zoom: 15,
+        });
+      }
+
+
+
 $(function() {
-    console.log("1");
-    watchSubmit()   
+    watchSubmit();
 });
 
-var latN;
-var lngN;
+
 
 function watchSubmit() {
-    console.log("2");
     $('.js-search-form').submit(function(){
-        console.log("3");
         event.preventDefault();
         var userInputSearchLocation = $(this).find('.js-userInputSearchLocation').val();
         console.log(13, userInputSearchLocation);
@@ -79,44 +87,40 @@ function getResult (userInputSearchLocation) {
                     'cache': true,
                 })
 
-                .done(function(data) {
-                        renderBusinesses(data);
+                .done(function(results) {
+                        renderBusinesses(results);
                     }
                 )
                 
 }
 
 
-function renderBusinesses(data) {
+function renderBusinesses(results) {
         var row = '';
-        var businessNum = data.businesses.length;
-        console.log(data);
+        var businessNum = results.businesses.length;
+        console.log(results);
+        var resultBusinesses = results.businesses;
         for (var i = 0; i < businessNum; i++) {
-            var biz = data.businesses[i];
+            var biz = resultBusinesses[i];
             row += '<h4>' + biz.name + '</h4>';
             row += '<p>Yelp Rating: ' + biz.rating + '</p>';
             row += '<p>Phone number: ' + biz.display_phone + '</p>';
             row += '<p>Address: </p>';
             row += '<p>' + biz.location.display_address + '</p>';
-
-            //initMap(biz);
-           
-            //row += '<div id="map"></div>';
-            //row += '<script async defer rc="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAtjZoeYGWfzt4nJ2VM8Hs7NZzhN0wVgI&callback=initMap"></script>';
-            latN = biz.location.coordinate.latitude;
-            lngN = biz.location.coordinate.longitude;
-            //row += '<a href="map.html">google map</a>';
-            //row += '<div id="map"></div>';
-            //row += '<script>';
-            //row += 'var map;';
-            //row += 'function initMap() {';
-            //row += 'map = new google.maps.Map(document.getElementById("map"), {';
-            //row += 'center: {lat: -34.397, lng: 150.644},';
-            //row += 'zoom: 8';
-            //row += '});} </script>';
-            //row += '<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAtjZoeYGWfzt4nJ2VM8Hs7NZzhN0wVgI&callback=initMap" async defer></script>';
-
-
+            row += '<button class="js-swapMap" id="' + biz.id + '" type="button" value="button">Show On Google Map</button>';
         }
-        $('.js-search-results').html(row);  
+        $('.js-search-results').html(row);
+        $('.js-swapMap').click(function(event){
+            var navBizId = $(this).closest('button').attr('id');
+            console.log('biz id: ', navBizId);
+            var bizPos = resultBusinesses.map(function(businesses){return businesses.id;}).indexOf(navBizId);
+            console.log('15', bizPos);
+            console.log('16', resultBusinesses[bizPos].name)
+            var navLat = resultBusinesses[bizPos].location.coordinate.latitude;
+            var navLng = resultBusinesses[bizPos].location.coordinate.longitude;
+            console.log('swap map: latitude: ', navLat, ' longitude: ', navLng);
+            swapMap(navLat, navLng);
+    });  
 }
+
+
