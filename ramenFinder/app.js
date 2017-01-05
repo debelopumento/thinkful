@@ -31,7 +31,7 @@ function getResult (userInputSearchLocation) {
                 };
         
                 var terms = 'ramen';
-                var near = userInputSearchLocation;
+                var near = 95124;
                 console.log(12, userInputSearchLocation);
         
                 var accessor = {
@@ -78,12 +78,14 @@ function getResult (userInputSearchLocation) {
 function renderBusinesses(data) {
 		var row = '';
 		var businessNum = data.businesses.length;
-		console.log(10);
+		console.log(data);
 		for (var i = 0; i < businessNum; i++) {
 			var biz = data.businesses[i];
-			console.log(11, biz.name);
 			row += '<h4>' + biz.name + '</h4>';
-			console.log(11);
+            row += '<p>Yelp Rating: ' + biz.rating + '</p>';
+            row += '<p>Phone number: ' + biz.display_phone + '</p>';
+            row += '<p>Address: </p>';
+            row += '<p>' + biz.location.display_address + '</p>';
 		}
 		$('.js-search-results').html(row);	
 }
