@@ -1,9 +1,8 @@
-var map;
 
 function initMap() {
         //var localLat=coordState.latN;
         //var localLng=coordState.LngN;
-        map = new google.maps.Map(document.getElementById('map'), {
+        var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 37.773972, lng: -122.431297},
           zoom: 12
         });
@@ -12,10 +11,16 @@ function initMap() {
 function swapMap(navLat, navLng) {
         //var localLat=coordState.latN;
         //var localLng=coordState.LngN;
-        map = new google.maps.Map(document.getElementById('map'), {
+        
+        var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: navLat, lng: navLng},
           zoom: 15,
         });
+        var marker = new google.maps.Marker({
+            position: {lat: navLat, lng: navLng},
+            map: map
+        });
+
       }
 
 
