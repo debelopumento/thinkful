@@ -1,0 +1,1 @@
+Live page: https://debelopumento.github.io/thinkful/logoSearch/index.html
