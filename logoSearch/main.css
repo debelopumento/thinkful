@@ -7,3 +7,7 @@ img {
 	width: 100px;
 	margin: 50px;
 }
+
+.fade {
+	filter: grayscale(100%) contrast(30%) brightness(170%) opacity(80%);
+}
