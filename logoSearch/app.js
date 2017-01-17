@@ -1,5 +1,18 @@
 function refreshLib(programTypeCri, educationLevelCri, logoLib) {
-	
+	var programTypeArray = [];
+	var educationLevelArray = [];
+	if (programTypeCri==="searchAll") {
+		programTypeArray = ['scholarship', 'loanProgram'];
+	} else {programTypeArray.push(programTypeCri);}
+	if (educationLevelCri==="searchAll") {
+		ducationLevelArray = ['kindergarden', 'highSchool'];
+	} else {educationLevelArray.push(educationLevelCri);}
+	logoLib.map(function(currentLogo) {
+		console.log(2, currentLogo.programType, currentLogo.educationLevel);
+		if (($.inArray(currentLogo.programType, programTypeArray) > -1) && ($.inArray(currentLogo.educationLevel, educationLevelArray) > -1))
+			{currentLogo.fade = false;} else {currentLogo.fade = true;}
+	});
+	renderLogos(logoLib);
 }
 
 
@@ -15,8 +28,8 @@ function renderLogos(logoLib) {
 	$('.js-logoContainer').html(row);
 	//serach criteria changes
 	$('.js-searchBut').click(function(event){
-		var programTypeCri = $('#programType').find("option:selected").text();
-		var educationLevelCri = $('#educationLevel').find("option:selected").text();
+		var programTypeCri = $('#programType').find("option:selected").val();
+		var educationLevelCri = $('#educationLevel').find("option:selected").val();
 		console.log(1, programTypeCri, educationLevelCri);
 		refreshLib(programTypeCri, educationLevelCri, logoLib);
 	});
