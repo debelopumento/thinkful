@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 
 
 router.post('/', jsonParser, (req, res) => {
-  const requiredFields = ['name', 'ingredients'];
+  const requiredFields = ['title', 'content', 'author'];
   for (let i=0; i<requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -27,7 +27,7 @@ router.post('/', jsonParser, (req, res) => {
       return res.status(400).send(message);
     }
   }
-  const item = BlogPosts.create(req.body.name, req.body.ingredients);
+  const item = BlogPosts.create(req.body.title, req.body.content, req.body.author);
   res.status(201).json(item);
 });
 
@@ -40,7 +40,7 @@ router.delete('/:id', (req, res) => {
 
 
 router.put('/:id', jsonParser, (req, res) => {
-  const requiredFields = ['name', 'ingredients', 'id'];
+  const requiredFields = ['title', 'content', 'author', 'id'];
   for (let i=0; i<requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -59,8 +59,8 @@ router.put('/:id', jsonParser, (req, res) => {
   console.log(`Updating shopping list item \`${req.params.id}\``);
   const updatedItem = BlogPosts.update({
     id: req.params.id,
-    name: req.body.name,
-    ingredients: req.body.ingredients
+    title: req.body.title,
+    content: req.body.content
   });
   res.status(204).json(updatedItem);
 })
